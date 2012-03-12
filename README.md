@@ -11,24 +11,24 @@ Based on:
 
 Install as a gem
 
-  gem install elfproef
+	gem install elfproef
 
 Or add it to your gemfile
 
-  gem 'elfproef'
+	gem 'elfproef'
 
 and run
 
-  bundle install
+	bundle install
 
 ## Usage
 
 Simply add "validates_elfproef_of" to your model class.
 
-  class User < ActiveRecord::Base
-    validates_elfproef_of :bank_account
-    validates_elfproef_of :bsn
-  end
+	class User < ActiveRecord::Base
+		validates_elfproef_of :bank_account
+		validates_elfproef_of :bsn
+	end
 
 ## Bugs / Feature Requests
 
@@ -42,7 +42,7 @@ create a pull request.
 
 ## Contributors
 
-  * Sytze Loor <sytzeloor> - original author
+	* Sytze Loor <sytzeloor> - original author
 
 ## License
 
