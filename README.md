@@ -42,7 +42,7 @@ create a pull request.
 
 ## Contributors
 
-	* Sytze Loor <sytzeloor> - original author
+  * Sytze Loor <sytzeloor> - original author
 
 ## License
 
