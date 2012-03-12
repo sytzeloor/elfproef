@@ -5,7 +5,7 @@ Citizen Service Numbers (BSN). These can be validated using the
 so-called Elfproef.
 
 Based on:
-[Elfproef](https://github.com/tilsammans/elfproef/) by <tilsammans>
+[Elfproef](https://github.com/tilsammans/elfproef/) by tilsammans
 
 ## Installation
 
