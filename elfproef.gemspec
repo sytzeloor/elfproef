@@ -5,9 +5,9 @@ require "version"
 Gem::Specification.new do |s|
   s.name        = "elfproef"
   s.version     = Elfproef::VERSION
-  s.authors     = ["Sytze Loor"]
-  s.email       = ["sytze@tweedledum.nl"]
-  s.homepage    = ""
+  s.authors     = ["Sytze Loor", "Ariejan de Vroom"]
+  s.email       = ["sytze@tweedledum.nl", "ariejan@ariejan.net"]
+  s.homepage    = "https://github.com/sytzeloor/elfproef""
   s.summary     = %q{Validation for Dutch bank account numbers and Citizen Service Numbers (BSN)}
   s.description = %q{Validation for Dutch bank account numbers and Citizen Service Numbers (BSN)}
 
