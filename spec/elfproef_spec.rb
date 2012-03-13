@@ -40,7 +40,6 @@ describe Elfproef do
     Elfproef.elfproef('1234567', opts).should == true
   end
 
-
   shared_examples_for "elfproef validations" do
     subject { account_class.new }
 
@@ -50,18 +49,58 @@ describe Elfproef do
     end
 
     it "fails with an obviously wrong number" do
-      subject.account = "666"
+      subject.account = "12345678901"
       subject.should_not be_valid
       subject.errors[:account].should == errors
     end
 
-    it "passes with a ING number" do
+    it "passes with a 7-diget ING number" do
       subject.account = "1234567"
       subject.should be_valid
     end
 
-    it "passes with a valid bank number" do
+    it "passes with a 6-digit ING number" do
+      subject.account = "123456"
+      subject.should be_valid
+    end
+
+    it "passes with a 5-digit ING number" do
+      subject.account = "12345"
+      subject.should be_valid
+    end
+
+    it "passes with a 4-digit ING number" do
+      subject.account = "1234"
+      subject.should be_valid
+    end
+
+    it "passes with a 3-digit ING number" do
+      subject.account = "123"
+      subject.should be_valid
+    end
+
+    it "passes with a 2-digit ING number" do
+      subject.account = "12"
+      subject.should be_valid
+    end
+
+    it "passes with a 1-digit ING number" do
+      subject.account = "1"
+      subject.should be_valid
+    end
+
+    it "passes with a ING number starting with a P (from Postbank)" do
+      subject.account = "P1234567"
+      subject.should be_valid
+    end
+
+    it "passes with a valid 9-digit bank number" do
       subject.account = "123456789"
+      subject.should be_valid
+    end
+
+    it "passes with a valid 10-digit bank number" do
+      subject.account = "0123456789"
       subject.should be_valid
     end
 
@@ -92,8 +131,13 @@ describe Elfproef do
       subject.errors[:account].should == errors
     end
 
-    it "passes with a valid bank number" do
+    it "passes with a valid 9-digit bank number" do
       subject.account = "123456789"
+      subject.should be_valid
+    end
+
+    it "passes with a valid 10-digit bank number" do
+      subject.account = "0123456789"
       subject.should be_valid
     end
 

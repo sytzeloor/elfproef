@@ -28,10 +28,10 @@ and run
 Simply add "validates_elfproef_of" to your model class.
 
 	class User < ActiveRecord::Base
-        # Validate with 11-test, do not allow 7 digit ING account numbers
+    # Validate with 11-test, do not allow 7 digit ING account numbers
 		validates :bsn, elfproef: true
 
-        # Validate bank account numbers with 11-test, allow 7 digit ING account numbers
+    # Validate bank account numbers with 11-test, allow 7 digit ING account numbers
 		validates :bank_account, elfproef: { allow_ing: true }
 	end
 

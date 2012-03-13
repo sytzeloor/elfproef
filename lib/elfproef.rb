@@ -19,10 +19,10 @@ module Elfproef
   # http://nl.wikipedia.org/wiki/Elfproef
   def self.elfproef(number, options = {})
     number, sum = number.to_s, 0
-    number.gsub!(/\D/, '')                   # strip out any non-digit character.
-    return true if options[:allow_ing] && number.length == 7        # always pass postbank accounts (7 digits)
-    return false unless number =~ /^\d{9}$/  # account should be exactly 9 digits
-    (1..9).each do |c|
+    number.gsub!(/\D/, '')                                                # strip out any non-digit character.
+    return true if options[:allow_ing] && (1..7).include?(number.length)  # always pass ING accounts (between 1 and 7 digits)
+    return false unless (9..10).include?(number.length)                   # account should be exactly 9 or 10 digits
+    (1..number.length).each do |c|
       sum += number[-c].chr.to_i * c
     end
     sum % 11 == 0
