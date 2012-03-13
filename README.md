@@ -26,8 +26,8 @@ and run
 Simply add "validates_elfproef_of" to your model class.
 
 	class User < ActiveRecord::Base
-		validates_elfproef_of :bank_account
-		validates_elfproef_of :bsn
+		validates :bank_account, elfproef: true
+		validates :bsn, elfproef: true
 	end
 
 ## Bugs / Feature Requests
@@ -42,7 +42,8 @@ create a pull request.
 
 ## Contributors
 
-  * Sytze Loor <sytzeloor> - original author
+  * Sytze Loor <sytze@tweedledum.nl> - original author
+  * Ariejan de Vroom <ariejan@ariejan.net>
 
 ## License
 
