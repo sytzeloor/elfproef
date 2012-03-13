@@ -1,8 +1,13 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
 describe Elfproef do
-
   account_class = Class.new do
+    include ActiveModel::Validations
+    attr_accessor :account
+    validates :account, :elfproef => { :allow_ing => true }
+  end
+
+  bank_only_class = Class.new do
     include ActiveModel::Validations
     attr_accessor :account
     validates :account, :elfproef => true
@@ -27,8 +32,12 @@ describe Elfproef do
     Elfproef.elfproef(123456789).should == true
     Elfproef.elfproef('12.34.56.789').should == true
     Elfproef.elfproef('12 34 56 789').should == true
-    Elfproef.elfproef(1234567).should == true
-    Elfproef.elfproef('1234567').should == true
+  end
+
+  it "tests valid ING accounts" do
+    opts = { :allow_ing => true }
+    Elfproef.elfproef(1234567, opts).should == true
+    Elfproef.elfproef('1234567', opts).should == true
   end
 
 
@@ -61,11 +70,47 @@ describe Elfproef do
       subject.should_not be_valid
       subject.errors[:account].should == errors
     end
-
   end
 
-  describe "English validations" do
+  shared_examples_for "elfproef, bank accounts only validations" do
+    subject { bank_only_class.new }
+
+    it "fails when empty" do
+      subject.should_not be_valid
+      subject.errors[:account].should == errors
+    end
+
+    it "fails with an obviously wrong number" do
+      subject.account = "666"
+      subject.should_not be_valid
+      subject.errors[:account].should == errors
+    end
+
+    it "fails with a ING number" do
+      subject.account = "1234567"
+      subject.should_not be_valid
+      subject.errors[:account].should == errors
+    end
+
+    it "passes with a valid bank number" do
+      subject.account = "123456789"
+      subject.should be_valid
+    end
+
+    it "fails with an wrong bank number" do
+      subject.account = "999999999"
+      subject.should_not be_valid
+      subject.errors[:account].should == errors
+    end
+  end
+
+  describe "bank + ing validations" do
     let!(:errors) { [ "is not valid"] }
     it_should_behave_like "elfproef validations"
+  end
+
+  describe "bank only validations" do
+    let!(:errors) { [ "is not valid"] }
+    it_should_behave_like "elfproef, bank accounts only validations"
   end
 end
