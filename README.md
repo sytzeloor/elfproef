@@ -1,5 +1,7 @@
 # Elfproef
 
+[![Build Status](https://secure.travis-ci.org/sytzeloor/elfproef.png?branch=master)](http://travis-ci.org/sytzeloor/elfproef)
+
 This gem adds a validation method for Dutch bank account numbers and
 Citizen Service Numbers (BSN). These can be validated using the
 so-called Elfproef.
