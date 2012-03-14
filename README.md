@@ -2,12 +2,10 @@
 
 [![Build Status](https://secure.travis-ci.org/sytzeloor/elfproef.png?branch=master)](http://travis-ci.org/sytzeloor/elfproef)
 
-This gem adds a validation method for Dutch bank account numbers and
-Citizen Service Numbers (BSN). These can be validated using the
-so-called Elfproef.
+This gem adds two validators to your arsenal:
 
-Based on:
-[Elfproef](https://github.com/tilsammans/elfproef/) by tilsammans
+  * BsnValidator will validate Burgerservicenummers (Dutch social security numbers). It accepts both 8 and 9 digit BSN numbers.
+  * BankAccountValidator will validate ING accounts (1-7 digits), and 9 or 10 digit bank account numbers using the elven-test.
 
 ## Installation
 
@@ -25,15 +23,24 @@ and run
 
 ## Usage
 
-Simply add "validates_elfproef_of" to your model class.
+Using the BsnValidator
 
-	class User < ActiveRecord::Base
-    # Validate with 11-test, do not allow 7 digit ING account numbers
-		validates :bsn, elfproef: true
+    class User < ActiveRecord::Base
+      validates :bsn_number, bsn: true
+    end
 
-    # Validate bank account numbers with 11-test, allow 7 digit ING account numbers
-		validates :bank_account, elfproef: { allow_ing: true }
+Using the BankAccountValidator
+
+    class User < ActiveRecord::Base
+      validates :account_number, bank_account: true
 	end
+
+You can also use these validators without `ActiveRecord` by including `ActiveModel::Validations`.
+   
+    class AwesomeDutchPerson
+      include ActiveModel::Validations
+      validates :bsn, bsn: true
+    end
 
 ## Bugs / Feature Requests
 
