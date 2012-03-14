@@ -26,16 +26,17 @@ class BsnValidator < ActiveModel::EachValidator
     # Make sure we have 9 digits
     number = "0#{number}" if number.size == 8
 
-    numbers = number.split("").map(&:to_i)
-    control, numbers = numbers.pop, numbers.reverse
-
+    numbers = number.split("").map(&:to_i).reverse
 
     sum = 0
     numbers.each_with_index do |digit, i|
-      sum += digit * (i+2)
+      # The first digit is * -1, the rest
+      # counts from 2 up.
+      i = i == 0 ? -1 : i+1
+      sum += digit * i
     end
 
-    sum.remainder(11) == control
+    sum % 11 == 0
   end
 end
 
