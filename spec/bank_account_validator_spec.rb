@@ -1,15 +1,15 @@
 require File.dirname(__FILE__) + '/spec_helper'
 
+class BankAccountTest
+  include ActiveModel::Validations
+  attr_accessor :account
+  validates :account, :bank_account => true
+end
+
 describe BankAccountValidator do
   subject {
-    Class.new do
-      include ActiveModel::Validations
-      attr_accessor :account
-      validates :account, :bank_account => true
-    end.new
+    BankAccountTest.new
   }
-
-  let(:errors) { ["is not valid"] }
 
   it "accepts 1 digit ING accounts" do
     subject.account = "1"
@@ -56,21 +56,21 @@ describe BankAccountValidator do
     subject.should be_valid
   end
 
-  it "fails on an 8 digit number" do
+  it "rejects on an 8 digit number" do
     subject.account = "12345678"
     subject.should_not be_valid
-    subject.errors[:account].should == errors
+    subject.errors[:account].should be_present
   end
 
-  it "fails on obviously wrong numbers" do
+  it "rejects on obviously wrong numbers" do
     subject.account = "CHUCKNORRIS"
     subject.should_not be_valid
-    subject.errors[:account].should == errors
+    subject.errors[:account].should be_present
   end
 
-  it "fails on 1 digit errors" do
+  it "rejects on 1 digit errors" do
     subject.account = "133456789"
     subject.should_not be_valid
-    subject.errors[:account].should == errors
+    subject.errors[:account].should be_present
   end
 end

@@ -5,7 +5,9 @@ require "active_model/validations"
 # Burgerservicenummer (Dutch social security number)
 class BsnValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    record.errors.add(attribute, options[:message] || "is not valid") unless validate_bsn(value, options)
+    unless validate_bsn(value, options)
+      record.errors.add(attribute, :invalid_bsn, options)
+    end
   end
 
   private

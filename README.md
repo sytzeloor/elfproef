@@ -42,6 +42,20 @@ You can also use these validators without `ActiveRecord` by including `ActiveMod
       validates :bsn, bsn: true
     end
 
+## I18n
+
+Add the following to your locale file:
+
+    en:
+      activemodel:
+        errors:
+          models:
+            YOUR_MODEL:
+              attributes:
+                ATTRIBUTE:
+                  invalid_bank_account: "is not a valid bank account number"
+                  invalid_bsn: "is not a valid BSN"
+
 ## Bugs / Feature Requests
 
 Please post them to

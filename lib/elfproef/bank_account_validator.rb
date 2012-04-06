@@ -1,11 +1,15 @@
-require "active_model"
-require "active_model/validations"
+require 'active_model/validator'
+require 'active_support/concern'
 
 # Validates if the specified value is a valid
 # bank account number using the 11-test
-class BankAccountValidator < ActiveModel::EachValidator
+class BankAccountValidator < ::ActiveModel::EachValidator
+  extend ActiveSupport::Concern
+
   def validate_each(record, attribute, value)
-    record.errors.add(attribute, options[:message] || "is not valid") unless validate_account_number(value, options)
+    unless validate_account_number(value, options)
+      record.errors.add(attribute, :invalid_bank_account, options)
+    end
   end
 
   private
