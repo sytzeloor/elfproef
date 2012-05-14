@@ -7,19 +7,17 @@ class BankAccountValidator < ::ActiveModel::EachValidator
   extend ActiveSupport::Concern
 
   def validate_each(record, attribute, value)
-    unless validate_account_number(value, options)
+    unless self.class.validate_account_number(value, options)
       record.errors.add(attribute, :invalid_bank_account, options)
     end
   end
-
-  private
 
   # Takes the bank account number and returns true if:
   #
   #  * The number is 1...7 digit ING account number (no verification is possible)
   #  * Is 9 or 10 digits and passes the 11-test
   #
-  def validate_account_number(value, options = {})
+  def self.validate_account_number(value, options = {})
     number = value.to_s.gsub(/\D/, '').strip
 
     # Not valid if length is 0, 8 or > 10
@@ -29,8 +27,10 @@ class BankAccountValidator < ::ActiveModel::EachValidator
     return true if (1..7).include?(number.length)
 
     # Validate length 9 and 10 numbers as bank accounts
-    validate_with_eleven_test(number)
+    self.validate_with_eleven_test(number)
   end
+
+  private
 
   # Performs the actual 11-test on a
   # 9 or 10 digit account number
@@ -44,7 +44,7 @@ class BankAccountValidator < ::ActiveModel::EachValidator
   #
   # If sum % 11 is 0, the number is valid, otherwise
   # a typo has been made or the number is outright invalid.
-  def validate_with_eleven_test(number)
+  def self.validate_with_eleven_test(number)
     # Make sure we have a 10 digit account number,
     # Prefix with a 0 if necessary
     number = "0#{number}" if number.length == 9
