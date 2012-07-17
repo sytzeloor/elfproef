@@ -22,27 +22,37 @@ describe BankAccountValidator do
   end
 
   it "accepts 3 digit ING accounts" do
-    subject.account = "3"
+    subject.account = "123"
     subject.should be_valid
   end
 
   it "accepts 4 digit ING accounts" do
-    subject.account = "4"
+    subject.account = "1234"
     subject.should be_valid
   end
 
   it "accepts 5 digit ING accounts" do
-    subject.account = "5"
+    subject.account = "12345"
     subject.should be_valid
   end
 
   it "accepts 6 digit ING accounts" do
-    subject.account = "6"
+    subject.account = "123456"
     subject.should be_valid
   end
 
   it "accepts 7 digit ING accounts" do
-    subject.account = "7"
+    subject.account = "1234567"
+    subject.should be_valid
+  end
+
+  it "accepts P-prefixed ING accounts" do
+    subject.account = "P123"
+    subject.should be_valid
+  end
+
+  it "accepts P-prefixed ING accounts with 7 digits" do
+    subject.account = "P1234567"
     subject.should be_valid
   end
 
