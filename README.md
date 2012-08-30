@@ -2,10 +2,11 @@
 
 [![Build Status](https://secure.travis-ci.org/sytzeloor/elfproef.png?branch=master)](http://travis-ci.org/sytzeloor/elfproef)
 
-This gem adds two validators to your arsenal:
+This gem adds three validators to your arsenal:
 
   * BsnValidator will validate Burgerservicenummers (Dutch social security numbers). It accepts both 8 and 9 digit BSN numbers.
   * BankAccountValidator will validate ING accounts (1-7 digits), and 9 or 10 digit bank account numbers using the elven-test.
+  * PaymentReferenceValidator will validate Betalingskenmerken (Dutch payment reference numbers) using a weighted modulus 11 and a length check.
 
 ## Installation
 
@@ -35,6 +36,12 @@ Using the BankAccountValidator
       validates :account_number, bank_account: true
 	end
 
+Using the PaymentReferenceValidator
+
+  class User < ActiveRecord::Base
+    validates :reference, payment_reference: true
+  end
+
 You can also use these validators without `ActiveRecord` by including `ActiveModel::Validations`.
    
     class AwesomeDutchPerson
@@ -55,6 +62,7 @@ Add the following to your locale file:
                 ATTRIBUTE:
                   invalid_bank_account: "is not a valid bank account number"
                   invalid_bsn: "is not a valid BSN"
+                  invalid_payment_reference: "is not a valid payment reference"
 
 ## Bugs / Feature Requests
 
