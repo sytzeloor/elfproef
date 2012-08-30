@@ -6,7 +6,7 @@ This gem adds three validators to your arsenal:
 
   * BsnValidator will validate Burgerservicenummers (Dutch social security numbers). It accepts both 8 and 9 digit BSN numbers.
   * BankAccountValidator will validate ING accounts (1-7 digits), and 9 or 10 digit bank account numbers using the elven-test.
-  * PaymentReferenceValidator will validate Betalingskenmerken (Dutch payment reference numbers) using a weighted modulus 11 and a length check.
+  * PaymentReferenceValidator will validate betalingskenmerken (Dutch payment reference numbers) using a weighted modulus 11 and a length check.
 
 ## Installation
 
@@ -38,9 +38,9 @@ Using the BankAccountValidator
 
 Using the PaymentReferenceValidator
 
-  class User < ActiveRecord::Base
-    validates :reference, payment_reference: true
-  end
+    class User < ActiveRecord::Base
+      validates :reference, payment_reference: true
+    end
 
 You can also use these validators without `ActiveRecord` by including `ActiveModel::Validations`.
    
