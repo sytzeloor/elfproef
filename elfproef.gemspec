@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Sytze Loor", "Ariejan de Vroom"]
   s.email       = ["sytze@tweedledum.nl", "ariejan@ariejan.net"]
   s.homepage    = "https://github.com/sytzeloor/elfproef"
-  s.summary     = %q{Validation for Dutch bank account numbers and Citizen Service Numbers (BSN)}
-  s.description = %q{Validation for Dutch bank account numbers and Citizen Service Numbers (BSN)}
+  s.summary     = %q{Validation for Dutch bank account numbers, Citizen Service Numbers (BSN) and Payment reference}
+  s.description = %q{Validation for Dutch bank account numbers, Citizen Service Numbers (BSN) and Payment reference}
 
   s.rubyforge_project = "elfproef"
 
