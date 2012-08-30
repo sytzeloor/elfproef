@@ -69,13 +69,15 @@ class PaymentReferenceValidator < ::ActiveModel::EachValidator
     # Remove the first digit (check digit) from the payment reference.
     # To calculate the sum we need a 15 digit payment reference, 
     # prefix with 0 if necessary.
-    reference = number[1..-1].rjust(15,"0")
+    reference = number[1..-1].rjust(15,"0").split("")
     weights = [10,5,8,4,2,1,6,3,7,9,10,5,8,4,2]
 
     # Calculate the sum
     sum = 0
-    reference.split("").each_with_index do |char, i|
-      sum += char.to_i * (weights[i])
+    i = 0
+    while i < 15
+      sum += reference[i].to_i * weights[i]
+      i += 1
     end
     check_digit = 11 - (sum % 11)
     check_digit -= 10 if check_digit >= 10
