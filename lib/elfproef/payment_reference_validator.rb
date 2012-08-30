@@ -48,7 +48,7 @@ class PaymentReferenceValidator < ::ActiveModel::EachValidator
   #   2  for a 14-digit payment reference
   #
   def self.validate_length_digit(number)
-    number[1].to_i == number.length - (number.length > 11 ? 12 : 2)
+    number[1].chr.to_i == number.length - (number.length > 11 ? 12 : 2)
   end
 
   # Validates the check digit. This is the first digit when a payment
@@ -80,6 +80,6 @@ class PaymentReferenceValidator < ::ActiveModel::EachValidator
     check_digit = 11 - (sum % 11)
     check_digit -= 10 if check_digit >= 10
 
-    number[0].to_i == check_digit
+    number[0].chr.to_i == check_digit
   end
 end
