@@ -66,6 +66,26 @@ describe BankAccountValidator do
     subject.should be_valid
   end
 
+  it 'accepts a Dutch IBAN bank account number' do
+    subject.account = 'NL91ABNA0417164300'
+    subject.should be_valid
+  end
+
+  it 'accepts a German IBAN bank account number' do
+    subject.account = 'DE89370400440532013000'
+    subject.should be_valid
+  end
+
+  it 'accepts a Belgium IBAN bank account number' do
+    subject.account = 'BE68539007547034'
+    subject.should be_valid
+  end
+
+  it 'rejects an invalid iban bank account' do
+    subject.account = 'NL11ABNA1111111'
+    subject.should_not be_valid
+  end
+
   it "rejects on an 8 digit number" do
     subject.account = "12345678"
     subject.should_not be_valid
