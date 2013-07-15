@@ -19,15 +19,19 @@ class BankAccountValidator < ::ActiveModel::EachValidator
   #
   def self.validate_account_number(value, options = {})
     number = value.to_s.gsub(/\D/, '').strip
-
     # Not valid if length is 0, 8 or > 10
-    return false if number.length == 0 || number.length == 8 || number.length > 10
+    return false if number.length == 0 || number.length == 8 || (value.length > 10 && value.length < 15) || value.length > 31
 
     # ING account numbers
     return true if (1..7).include?(number.length)
 
     # Validate length 9 and 10 numbers as bank accounts
-    self.validate_with_eleven_test(number)
+    return true if self.validate_with_eleven_test(number) if (number.length == 9 || number.length == 10)
+
+    # If all other validations are failing, we are possibly dealing with an IBAN number
+    return true if self.validate_with_iban_test(value)
+
+    return false
   end
 
   private
@@ -56,5 +60,31 @@ class BankAccountValidator < ::ActiveModel::EachValidator
     end
 
     sum % 11 == 0
+  end
+
+  # Perform the mod-97 test (as described in ISO 7064)
+  # Check that the total IBAN length is correct as per the country. If not, the IBAN is invalid.
+  # Move the four initial characters to the end of the string.
+  # Replace each letter in the string with two digits, thereby expanding the string, where A = 10, B = 11, ..., Z = 35.
+  # Interpret the string as a decimal integer and compute the remainder of that number on division by 97.
+  #
+  # If the remainder of the test equals 1, the IBAN is valid
+  def self.validate_with_iban_test(value)
+    country_prefix = to_ascii_code(value[0..3])
+    bank_code = to_ascii_code(value[4..7])
+    bank_number = value[8..value.length]
+    ("#{bank_code}#{bank_number}#{country_prefix}".to_i % 97) == 1
+  end
+
+  def self.to_ascii_code(value)
+    converted_value = ""
+    value.each_byte do |byte|
+      if (65..90).include?(byte)
+        converted_value += (byte - 55).to_s
+      else
+        converted_value += byte.chr
+      end
+    end
+    return converted_value
   end
 end
