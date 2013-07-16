@@ -2,11 +2,13 @@
 
 [![Build Status](https://secure.travis-ci.org/sytzeloor/elfproef.png?branch=master)](http://travis-ci.org/sytzeloor/elfproef)
 
-This gem adds three validators to your arsenal:
+## Features
 
-  * BsnValidator will validate Burgerservicenummers (Dutch social security numbers). It accepts both 8 and 9 digit BSN numbers.
-  * BankAccountValidator will validate ING accounts (1-7 digits), and 9 or 10 digit bank account numbers using the elven-test.
-  * PaymentReferenceValidator will validate betalingskenmerken (Dutch payment reference numbers) using a weighted modulus 11 and a length check.
+* Validate international IBAN account numbers
+* Validate Dutch BSN (Social Security) numbers (8 or 9 digits)
+* Validates Dutch bank account numbers (9 or 10 digits)
+* Allow for 1-7 digit ING bank account numbers
+* Validate Dutch payment reference numbers (betalingskenmerken)
 
 ## Installation
 
@@ -22,27 +24,35 @@ and run
 
 	bundle install
 
+## Compatibility
+
+As of elfproef-0.2.0 you need ruby-1.9.3 or up, ruby-2.0.0 is preferred.
+
+If your project is stuck at <= ruby-1.9.2, use the latest elfproef-0.1.x release.
+
+    gem 'elfproef', '0.1.4'
+
 ## Usage
 
-Using the BsnValidator
+Using the BsnValidator:
 
     class User < ActiveRecord::Base
       validates :bsn_number, bsn: true
     end
 
-Using the BankAccountValidator
+Using the BankAccountValidator:
 
     class User < ActiveRecord::Base
       validates :account_number, bank_account: true
 	end
 
-Using the PaymentReferenceValidator
+Using the PaymentReferenceValidator:
 
     class User < ActiveRecord::Base
       validates :reference, payment_reference: true
     end
 
-You can also use these validators without `ActiveRecord` by including `ActiveModel::Validations`.
+You can also use these validators without `ActiveRecord` by including `ActiveModel::Validations`:
    
     class AwesomeDutchPerson
       include ActiveModel::Validations
@@ -81,7 +91,7 @@ create a pull request.
 
 ## License
 
-Copyright (c) 2012 Sytze Loor
+Copyright (c) 2012-2013 Sytze Loor, Ariejan de Vroom
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
