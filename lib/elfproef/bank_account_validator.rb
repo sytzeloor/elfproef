@@ -18,7 +18,8 @@ class BankAccountValidator < ::ActiveModel::EachValidator
   #  * Is 9 or 10 digits and passes the 11-test
   #
   def self.validate_account_number(value, options = {})
-    number = value.to_s.gsub(/\D/, '').strip
+    value  = value.to_s
+    number = value.gsub(/\D/, '').strip
     # Not valid if length is 0, 8 or > 10
     return false if number.length == 0 || number.length == 8 || (value.length > 10 && value.length < 15) || value.length > 31
 
