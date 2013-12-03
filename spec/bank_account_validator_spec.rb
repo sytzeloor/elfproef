@@ -11,6 +11,11 @@ describe BankAccountValidator do
     BankAccountTest.new
   }
 
+  it "accepts 1 digit ING accounts used as integer" do
+    subject.account = 1
+    subject.should be_valid
+  end
+
   it "accepts 1 digit ING accounts" do
     subject.account = "1"
     subject.should be_valid
@@ -88,6 +93,12 @@ describe BankAccountValidator do
 
   it "rejects on an 8 digit number" do
     subject.account = "12345678"
+    subject.should_not be_valid
+    subject.errors[:account].should be_present
+  end
+
+  it "rejects on an 8 digit number as integer" do
+    subject.account = 123456789123456
     subject.should_not be_valid
     subject.errors[:account].should be_present
   end
