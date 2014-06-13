@@ -19,7 +19,7 @@ class BankAccountValidator < ::ActiveModel::EachValidator
   #
   def self.validate_account_number(value, options = {})
     value  = value.to_s
-    number = value.gsub(/\D/, '').strip
+    number = value.gsub(/^P\s?/i, '').strip
     # Not valid if length is 0, 8 or > 10
     return false if number.length == 0 || number.length == 8 || (value.length > 10 && value.length < 15) || value.length > 31
 
