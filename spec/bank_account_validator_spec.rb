@@ -114,4 +114,10 @@ describe BankAccountValidator do
     subject.should_not be_valid
     subject.errors[:account].should be_present
   end
+
+  it "rejects on number with comments from users" do
+    subject.account = "417164300(ABNamro)"
+    subject.should_not be_valid
+    subject.errors[:account].should be_present
+  end
 end
